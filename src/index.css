@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,*::before,*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header a{
+  color: #83888F;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+body{
+  font-family: "Barlow", sans-serif;
+  max-width: 1440px;
+  width: 100%;
+  margin-inline:auto;
+  background-color: #FDFCF9;
+}
+.quality__bg{
+  background-image: url('./assets/image-quality.jpg');
+  width:500px;
+  height: 500px;
+  border-radius: 20px;
+}
+.banner{
+  height: 550px;
+  border-radius: 10px;
+
+}
+.banner h1 {
+  font-family: "Fraunces", serif;
+}
+.banner__content{
+ 
+  color: white;
+  max-width: 600px;
+}
+address li{
+  margin-bottom: 1rem;
+}
+.plan{
+  position: relative;
+}
+.plan::before{
+  position: absolute;
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 2px solid #0E8784;
+  top: -3rem;
+  border-radius: 50%;
+  background-color:#FDFCF9 ;
+
+}
+.createPlan .plan:not(:last-child):after{
+  z-index: 2;
+}
+.plan:not(:last-child):after{
+  position: absolute;
+  content: '';
+  width: 150%;
+  height: 1px;
+  top: -1.9rem;
+  left: 0;
+  border: 1px solid #FDD6BA;
+  transform: translateX(-50%,-50%);
+  z-index:-1
+}
+.homeBanner,.about__banner_bg,.error_page,.create_plan__banner_bg,.quality__bg{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.homeBanner{
+  background-image: url('../src/assets/desktop-image-hero-coffeepress.jpg') ;
+}
+.create_plan__banner_bg{
+  background-image: url('./assets/create_plan_banner.jpg');
+}
+.about__banner_bg{
+  background-image: url('../src/assets/about_banner.jpg') ;
+}
+.error_page{
+  background-image: url('../src/assets/home-bg.jpg');
+  position: relative;
+}
+.error_page_bg{
+  position: absolute;
+  top:0;
+  left: 0;
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.455);
+}
+.text-shadow{
+  content: '';
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(254, 252, 247, 0.0001) -90%, #FEFCF7 100%);
+  top:0;
+  left: 0;
+}
+.collection__card img{
+  width: 280px;
+  height: 200px;
+  object-fit: contain;
+}
+footer img{
+  filter: brightness(0) saturate(100%) invert(99%) sepia(99%) saturate(0%) hue-rotate(200deg) brightness(107%) contrast(100%);
+}
+@media (max-width:768px){
+  .plan::before,.plan:not(:last-child):after{
+    content: none;
+  }
+}
+@media (max-width:970px){
+  .quality__bg{
+    background-image: url('./assets/mobile-image-quality.jpg');
+    position: absolute;
+    width: 80%;
+    height: 300px;
+  }
+  
+}
+@keyframes fromLeft {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0; 
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+   }
+}
+@keyframes fromRight {
+  0% {
+      transform: translateX(0px);
+      opacity: 1;
+  }
+  100% {
+      transform: translateX(-10px);
+      opacity: 0; 
+   }
+}
+.createPlan{
+  @apply bg-[#2C343E] text-white lg:!w-[100%] rounded-lg md:!p-[3rem] mx-0;
+}
+
+.createPlan .plan::before{
+  background-color: transparent;
+  overflow: hidden;
+}
+.createPlan .plan::after{
+  left: 0;
+  width: 112%;
+
+}
+.createPlan .plan:nth-child(2)::after{
+  left:1rem;
+}
+
+@media (max-width:600px) {
+  
+  .homeBanner{
+    background-image: url('./assets/mobile-image-hero-coffeepress.jpg');
+  }
+  .about__banner_bg{
+    background-image: url('./assets/mobile_about_banner.jpg');
+  }
+  .create_plan__banner_bg{
+    background-image: url('./assets/mobile_create_plan_banner.jpg');
+  }
+}
