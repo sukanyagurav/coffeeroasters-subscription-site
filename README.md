@@ -4,8 +4,8 @@
 
 
 ### Links
-- Solution URL: [Entertainment web app](https://github.com/sukanyagurav/Entertainment-web-app)
-- Live Site URL: [Entertainment web app](https://entertainmentwebapp67.netlify.app/)
+- Solution URL: [Coffeeroasters subscription app](https://github.com/sukanyagurav/coffeeroasters-subscription-site)
+- Live Site URL: [Coffeeroasters subscription app](https://cofferoasters-subscription-site-fm.netlify.app/)
 
 
 Users should be able to:
@@ -46,3 +46,6 @@ Your app is ready to be deployed!
 
 ### Tablet View
 ![Design  tablet preview for Coffeeroasters subscription app ](./src/assets/tabletView.jpg)
+
+### checkout 
+![Design  checkout preview for Coffeeroasters subscription app ](./src/assets/checkout%20success.png)

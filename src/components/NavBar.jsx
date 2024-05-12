@@ -14,8 +14,8 @@ const NavBar = () => {
       <nav>
         <ul className={`hidden md:flex gap-6 content-center items-center `}>
             <li><NavLink to="/"  className='hover:border-b-2 duration-300 border-[#0E8784] hover:text-[#0E8784]'>Home</NavLink></li>
-            <li><NavLink to="/about_us"  className={({isActive})=> isActive && 'border-[#0E8784] border-b-2 text-[#0E8784]'}>About us</NavLink></li>
-            <li><NavLink to="/create_your_own_plan" className={({isActive})=> isActive && 'border-[#0E8784] border-b-2 text-[#0E8784]'}>create your plan</NavLink></li>
+            <li><NavLink to="/about_us"  className={({isActive})=> isActive ? 'border-[#0E8784] border-b-2 text-[#0E8784] ' : 'hover:border-b-2 duration-300 border-[#0E8784] hover:text-[#0E8784]'}>About us</NavLink></li>
+            <li><NavLink to="/create_your_own_plan" className={({isActive})=> isActive ? 'border-[#0E8784] border-b-2 text-[#0E8784] ' : 'hover:border-b-2 duration-300 border-[#0E8784] hover:text-[#0E8784]'}>create your plan</NavLink></li>
         </ul>
       </nav>
       <button className='md:hidden text-2xl cursor-pointer' onClick={()=> setHamburger(true)} ><i className="fa-solid fa-bars"></i></button>

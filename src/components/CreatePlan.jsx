@@ -6,7 +6,7 @@ import arrow from '../assets/icon-arrow.svg'
 import { HashLink } from 'react-router-hash-link'
 import Accordion from './Accordion'
 import Modal from './Modal'
-import imgsrc from '../assets/Animation - 1715512844772.gif'
+import imgsrc from '../assets/thankyou.gif'
 const CreatePlan = () => {
   const [userPlan,setUserPlan]=useState([])
   const [isOpen,setIsOpen] = useState(false)
@@ -32,9 +32,10 @@ const CreatePlan = () => {
     })
   
   }
-
   function closeModal(){
     setIsOpen(false)
+    setIsCheckout(false)
+
   }
   let  price=''
   if(userPlan?.find(plan=> plan.id == '5')?.type ==='Every Week'){
@@ -51,8 +52,10 @@ const CreatePlan = () => {
     setIsCheckout(true)
     const inter= setTimeout(()=>{
       setIsOpen(true)
-    },1000)
-    setUserPlan([])
+      setUserPlan([])
+
+    },1500)
+
   }
   return (
   <>
@@ -178,7 +181,11 @@ const CreatePlan = () => {
                   </Modal>
               }
               {
-                isCheckout && <Modal isOpen={isOpen} closeModal={closeModal}>
+                isCheckout && 
+                <>
+                
+                <Modal isOpen={isOpen} closeModal={closeModal}>
+                <img src={imgsrc} className='top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] fixed w-[70%] z-30'/>
                   <div className="header flex justify-between bg-[#0E8784] p-[1.5rem] text-[#494b4a]">
                         <h3 className='text-3xl font-semibold font-[Fraunces] '>Thank You! </h3>
                         <button className='text-3xl font-semibold relative z-90' onClick={closeModal}>X</button>
@@ -189,8 +196,9 @@ const CreatePlan = () => {
                       </p>
                      
                       </div>
-                      <img src={imgsrc} className='top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] fixed w-[70%] z-30'/>
+                     
                 </Modal>
+                </> 
               }
             </article>
   </>
