@@ -1,29 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Banner from './Banner'
 import HowItWorks from './HowItWorks'
 import arrow from '../assets/icon-arrow.svg'
-import { Link, NavLink } from 'react-router-dom'
+
 import { HashLink } from 'react-router-hash-link'
 import Accordion from './Accordion'
+import Modal from './Modal'
+import imgsrc from '../assets/Animation - 1715512844772.gif'
 const CreatePlan = () => {
   const [userPlan,setUserPlan]=useState([])
-  let restultText=''
+  const [isOpen,setIsOpen] = useState(false)
+  const [isCheckout,setIsCheckout] = useState(false)
   function updateUserPlan (value) {
-    const uniqueIds=[]
+
     setUserPlan(prev=>{
-      const updatedState =prev.filter(element => {
-        const isDuplicate = uniqueIds.includes(element.id);
-        if (!isDuplicate) {
-          uniqueIds.push(element.id);
-          return true;
+      const updatedState = [...prev]
+      const existingItemIndex = updatedState.findIndex(
+        item=>item.id === value.id
+      )
+      const existingItem = updatedState[existingItemIndex]
+      if(existingItem){
+        const updatedItem ={
+          ...existingItem,
+          type:value.type
         }
-        return false;
-      })
-      return [
-        ...updatedState,
-        value
-      ]
+        updatedState[existingItemIndex] = updatedItem
+      }else{
+        updatedState.push(value)
+      }
+      return [...updatedState]
     })
+  
+  }
+
+  function closeModal(){
+    setIsOpen(false)
+  }
+  let  price=''
+  if(userPlan?.find(plan=> plan.id == '5')?.type ==='Every Week'){
+      price=`$${52}`
+  }
+  else if(userPlan?.find(plan=> plan.id == '5')?.type ==='Every 2 weeks'){
+      price=`$${35}`
+  }else if(userPlan?.find(plan=> plan.id == '5')?.type ==='Every month'){
+      price=`$${22} `
+  }
+
+  function checkout(){
+    setIsOpen(false)
+    setIsCheckout(true)
+    const inter= setTimeout(()=>{
+      setIsOpen(true)
+    },1000)
+    setUserPlan([])
   }
   return (
   <>
@@ -40,7 +69,7 @@ const CreatePlan = () => {
                 </ul>
               </aside>
               <div className="w-full ">
-              <Accordion id="1" question={"How do you drink your coffee?"} fnSelectedValue={updateUserPlan} answer={[
+              <Accordion id="1" isCheckout={isCheckout} question={"How do you drink your coffee?"} fnSelectedValue={updateUserPlan} answer={[
                 { 
                   type:'Capsule',
                   description:'Compatible with Nespresso systems and similar brewers',
@@ -53,7 +82,7 @@ const CreatePlan = () => {
                   description:'Dense and finely ground beans for an intense, flavorful experience'
                 }
               ]}/>
-              <Accordion id="2" question={"What type of coffee?"} fnSelectedValue={updateUserPlan} answer={[
+              <Accordion id="2" isCheckout={isCheckout} question={"What type of coffee?"} fnSelectedValue={updateUserPlan} answer={[
                 { type:'Single origin',
                   description:'Distinct, high quality coffee from a specific family-owned farm',
                 },{
@@ -65,7 +94,7 @@ const CreatePlan = () => {
                   description:'Combination of two or three dark roasted beans of organic coffees'
                 }
               ]}/>
-               <Accordion id="3" question={"How much would you like?"} fnSelectedValue={updateUserPlan} answer={[
+               <Accordion id="3" isCheckout={isCheckout} question={"How much would you like?"} fnSelectedValue={updateUserPlan} answer={[
                 { type:'250g',
                   description:'Perfect for the solo drinker. Yields about 12 delicious cups.',
                 },{
@@ -77,7 +106,7 @@ const CreatePlan = () => {
                   description:'Perfect for offices and events. Yields about 90 delightful cups.'
                 }
               ]}/>
-              <Accordion id="4" question={"Want us to grind them?"} fnSelectedValue={updateUserPlan} answer={[
+              <Accordion id="4" isCheckout={isCheckout} question={"Want us to grind them?"} fnSelectedValue={updateUserPlan} answer={[
                 { type:'Wholebean',
                   description:'Perfect for the solo drinker. Yields about 12 delicious cups.',
                 },{
@@ -89,7 +118,7 @@ const CreatePlan = () => {
                   description:'Perfect for offices and events. Yields about 90 delightful cups.'
                 }
               ]}/>
-              <Accordion id="5" question={"How often should we deliver?"} fnSelectedValue={updateUserPlan} answer={[
+              <Accordion id="5"  isCheckout={isCheckout} question={"How often should we deliver?"} fnSelectedValue={updateUserPlan} answer={[
                 { type:'Every Week',
                   amount:'$22',
                   description:` per shipment. Includes free first class shipping.`,
@@ -120,10 +149,49 @@ const CreatePlan = () => {
                     }
                   
                 </div>
-                <button className={` p-4 rounded-lg mt-3 ml-auto w-[190px]  cursor-pointer font-bold ${userPlan.length === 5 ?  'bg-[#0E8784] text-white' :'bg-[#b0c3c3] text-white'}`} disabled={userPlan.length === 5}> Create my plan</button>
-              </div>
-              </div>
+                <button className={` p-4 rounded-lg mt-3 ml-auto w-[190px]  ${userPlan.length!==5 ? 'cursor-not-allowed' : 'cursor-pointer'} font-bold ${userPlan.length === 5 ?  'bg-[#0E8784] text-white' :'bg-[#b0c3c3] text-white'}`} disabled={userPlan.length !== 5} onClick={()=>setIsOpen(true)}> Create my plan</button>
               
+                
+              </div>
+             
+              </div>
+              {
+                  (isOpen && !isCheckout) && <Modal isOpen={isOpen} closeModal={closeModal}>
+                
+                      <div className="header flex justify-between bg-[#0E8784] p-[1.5rem] text-[#494b4a]">
+                        <h3 className='text-3xl font-semibold font-[Fraunces] '>Order Summary </h3>
+                        <button className='text-3xl font-semibold' onClick={closeModal}>X</button>
+                      </div>
+                      <div className="body p-[1.5rem]">
+                      <p className='text-2xl font-semibold text-[#676869]'>
+                      “I drink my coffee as <span className='text-[#0E8784]'>{userPlan.find(plan=> plan.id == '1') ?  userPlan.find(plan=> plan.id =='1').type : '...'} </span>, with a  type of bean <span className='text-[#0E8784]'>{userPlan.find(plan=> plan.id == '2') ? userPlan.find(plan=> plan.id =='2').type : '...'} </span>.  <span className='text-[#0E8784]'>{userPlan.find(plan=> plan.id == '3') ? userPlan.find(plan=> plan.id =='3').type : '...'} </span>ground ala  <span className='text-[#0E8784]'>{userPlan.find(plan=> plan.id == '4') ? userPlan.find(plan=> plan.id =='4').type : '...'}</span>, sent to me  <span className='text-[#0E8784]'>{userPlan.find(plan=> plan.id == '5') ? userPlan.find(plan=> plan.id =='5').type : '...'} </span>”</p>
+                      <p className='text-lg text-gray-800 mt-3'>
+                      Is this correct? You can proceed to checkout or go back to plan selection if something is off. Subscription discount codes can also be redeemed at the checkout.
+                      </p>
+                      <div className="flex justify-between mt-4 items-center">
+                        <h5 className='text-2xl font-extrabold font-[Fraunces] text-[#676869]'><span className='text-[#0E8784]'>{price}</span> / month</h5>
+                        <button className='bg-[#0E8784] p-2 rounded-lg mt-3 w-[190px] cursor-pointer font-bold transition-all duration-700 hover:bg-transparent border-[1px] border-[#0E8784]' onClick={checkout}>Checkout</button>
+                      </div>
+                      </div>
+
+            
+                  </Modal>
+              }
+              {
+                isCheckout && <Modal isOpen={isOpen} closeModal={closeModal}>
+                  <div className="header flex justify-between bg-[#0E8784] p-[1.5rem] text-[#494b4a]">
+                        <h3 className='text-3xl font-semibold font-[Fraunces] '>Thank You! </h3>
+                        <button className='text-3xl font-semibold relative z-90' onClick={closeModal}>X</button>
+                      </div>
+                      <div className="body p-[1.5rem]">
+                      <p className='text-2xl  text-[#676869]'>
+                      Thanks for confirming your subscription! We hope you have fun using our platform. If you ever need support, please feel free to email us at support@Coffeeroasters.com.
+                      </p>
+                     
+                      </div>
+                      <img src={imgsrc} className='top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] fixed w-[70%] z-30'/>
+                </Modal>
+              }
             </article>
   </>
   )

@@ -178,3 +178,12 @@ footer img{
     background-image: url('./assets/mobile_create_plan_banner.jpg');
   }
 }
+[data-aos="textAnimation"] {
+  clip-path: polygon(0% 0%, 0 100%, 0 100%, 0% 0%);
+
+  &.aos-animate {
+    
+      clip-path: polygon(-50% 0, 0 100%, 100% 100%, 100% 0%);
+  }
+
+}

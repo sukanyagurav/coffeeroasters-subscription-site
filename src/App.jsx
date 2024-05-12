@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Root from './Root'
 import Home from './components/Home'
 import About from './components/About'
 import CreatePlan from './components/CreatePlan'
 import ErrorPage from './components/ErrorPage'
+import { useEffect } from 'react';
 const router = createBrowserRouter([
   {
     path:'/',
@@ -30,7 +29,9 @@ const router = createBrowserRouter([
   }
 ])
 function App() {
-
+  useEffect(() => {
+    AOS.init();
+  }, [])
 
   return (
   <RouterProvider router={router}/>
